@@ -13,6 +13,7 @@ int main(int argc, char* args[]) {
 		std::vector <Brick> bricks = createBricks();
 		Paddle paddle;
 		Ball ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+		int buttonid = 0;
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -34,7 +35,16 @@ int main(int argc, char* args[]) {
 			SDL_Color color = paddle.getColor();
 			SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
 			paddle.move();
-			ball.move(&bricks, &paddle);
+			if (!ball.move(&bricks, &paddle))
+			{
+				SDL_ShowMessageBox(&messageboxdata, &buttonid);
+				if (buttonid == 0) {
+					break;
+				}
+				bricks = createBricks();
+				ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+				paddle = Paddle();
+			}
 			SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
 			ball.DrawBall(window.getRenderer());
 
