@@ -52,7 +52,7 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 	}
 }
 
-void Ball::move(std::vector <Brick> bricks, Paddle* paddle)
+void Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 {
 	//Move the dot left or right
 	centreX += velX;
@@ -77,13 +77,13 @@ void Ball::move(std::vector <Brick> bricks, Paddle* paddle)
 	}
 }
 
-bool Ball::checkCollision(std::vector <Brick> bricks)
+bool Ball::checkCollision(std::vector <Brick>* bricks)
 {
-	for (int i = 0; i < bricks.size(); i++)
+	for (int i = 0; i < bricks->size(); i++)
 	{
 		//Closest point on collision box
 		int cX, cY;
-		SDL_Rect* b = bricks[i].getRect();
+		SDL_Rect* b = bricks->operator[](i).getRect();
 
 		//Find closest x offset
 		if (centreX < b->x)
@@ -116,6 +116,7 @@ bool Ball::checkCollision(std::vector <Brick> bricks)
 		if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
 		{
 			//This box and the circle have collided
+			bricks->erase(bricks->begin() + i);
 			return true;
 		}
 	}

@@ -25,9 +25,7 @@ int main(int argc, char* args[]) {
 			}
 			window.clearScreen();
 
-			
-			//Render red filled quad
-			for (int i = 0; i < TOTAL_TILES; i++)
+			for (int i = 0; i < bricks.size(); i++)
 			{
 				SDL_Color color = bricks[i].getColor();
 				SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
@@ -36,7 +34,7 @@ int main(int argc, char* args[]) {
 			SDL_Color color = paddle.getColor();
 			SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
 			paddle.move();
-			ball.move(bricks, &paddle);
+			ball.move(&bricks, &paddle);
 			SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
 			ball.DrawBall(window.getRenderer());
 
