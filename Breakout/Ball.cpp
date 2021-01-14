@@ -5,6 +5,8 @@ Ball::Ball(int centreX, int centreY, int radius)
 	this->centreX = centreX;
 	this->centreY = centreY;
 	this->radius = radius;
+	velX = VEL;
+	velY = VEL;
 }
 
 void Ball::DrawBall(SDL_Renderer* renderer)
@@ -48,4 +50,128 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 			error += (tx - diameter);
 		}
 	}
+}
+
+void Ball::move(std::vector <Brick> bricks, Paddle* paddle)
+{
+	//Move the dot left or right
+	centreX += velX;
+
+	//If the dot collided or went too far to the left or right
+	if ((centreX - radius < 0) || (centreX + radius > Window::SCREEN_WIDTH) || checkCollision(bricks) || checkCollision(paddle))
+	{
+		//Move back
+		centreX -= velX;
+		velX = -velX;
+	}
+
+	//Move the dot up or down
+	centreY += velY;
+
+	//If the dot collided or went too far up or down
+	if ((centreY - radius < 0) || (centreY + radius > Window::SCREEN_HEIGHT) || checkCollision(bricks) || checkCollision(paddle))
+	{
+		//Move back
+		centreY -= velY;
+		velY = -velY;
+	}
+}
+
+bool Ball::checkCollision(std::vector <Brick> bricks)
+{
+	for (int i = 0; i < bricks.size(); i++)
+	{
+		//Closest point on collision box
+		int cX, cY;
+		SDL_Rect* b = bricks[i].getRect();
+
+		//Find closest x offset
+		if (centreX < b->x)
+		{
+			cX = b->x;
+		}
+		else if (centreX > b->x + b->w)
+		{
+			cX = b->x + b->w;
+		}
+		else
+		{
+			cX = centreX;
+		}
+		//Find closest y offset
+		if (centreY < b->y)
+		{
+			cY = b->y;
+		}
+		else if (centreY > b->y + b->h)
+		{
+			cY = b->y + b->h;
+		}
+		else
+		{
+			cY = centreY;
+		}
+
+		//If the closest point is inside the circle
+		if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
+		{
+			//This box and the circle have collided
+			return true;
+		}
+	}
+
+	//If the shapes have not collided
+	return false;
+}
+
+bool Ball::checkCollision(Paddle* paddle)
+{
+	//Closest point on collision box
+	int cX, cY;
+	SDL_Rect* b = paddle->getRect();
+
+	//Find closest x offset
+	if (centreX < b->x)
+	{
+		cX = b->x;
+	}
+	else if (centreX > b->x + b->w)
+	{
+		cX = b->x + b->w;
+	}
+	else
+	{
+		cX = centreX;
+	}
+	//Find closest y offset
+	if (centreY < b->y)
+	{
+		cY = b->y;
+	}
+	else if (centreY > b->y + b->h)
+	{
+		cY = b->y + b->h;
+	}
+	else
+	{
+		cY = centreY;
+	}
+
+	//If the closest point is inside the circle
+	if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
+	{
+		//This box and the circle have collided
+		return true;
+	}
+
+
+	//If the shapes have not collided
+	return false;
+}
+
+double Ball::distanceSquared(double x1, double y1, double x2, double y2)
+{
+	double deltaX = x2 - x1;
+	double deltaY = y2 - y1;
+	return deltaX * deltaX + deltaY * deltaY;
 }

@@ -14,5 +14,5 @@ static const int TOTAL_TILES = 50;
 static const int COLUMS = 10;
 static const int ROWS = 5;
 
-std::vector <Brick> createTiles();
+std::vector <Brick> createBricks();
 
