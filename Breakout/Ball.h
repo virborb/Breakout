@@ -10,7 +10,7 @@ class Ball
 public:
 	Ball(int centreX, int centreY, int radius);
 	void DrawBall(SDL_Renderer* renderer);
-	void move(std::vector <Brick>* bricks, Paddle* paddle);
+	bool move(std::vector <Brick>* bricks, Paddle* paddle);
 	bool checkCollision(std::vector <Brick>* bricks);
 	bool checkCollision(Paddle* paddle);
 	double distanceSquared(double x1, double y1, double x2, double y2);

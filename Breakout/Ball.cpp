@@ -52,7 +52,7 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 	}
 }
 
-void Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
+bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 {
 	//Move the dot left or right
 	centreX += velX;
@@ -68,6 +68,11 @@ void Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 	//Move the dot up or down
 	centreY += velY;
 
+	if ((centreY + radius > Window::SCREEN_HEIGHT)) 
+	{
+		return false;
+	}
+
 	//If the dot collided or went too far up or down
 	if ((centreY - radius < 0) || (centreY + radius > Window::SCREEN_HEIGHT) || checkCollision(bricks) || checkCollision(paddle))
 	{
@@ -75,6 +80,7 @@ void Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 		centreY -= velY;
 		velY = -velY;
 	}
+	return true;
 }
 
 bool Ball::checkCollision(std::vector <Brick>* bricks)
