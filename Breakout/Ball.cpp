@@ -74,7 +74,7 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 	}
 
 	//If the dot collided or went too far up or down
-	if ((centreY - radius < 0) || (centreY + radius > Window::SCREEN_HEIGHT) || checkCollision(bricks) || checkCollision(paddle))
+	if ((centreY - radius < 0) || checkCollision(bricks) || checkCollision(paddle))
 	{
 		//Move back
 		centreY -= velY;
