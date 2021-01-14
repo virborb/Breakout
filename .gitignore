@@ -31,8 +31,11 @@
 *.out
 *.app
 
+# Visual Studio
 x64/
 Debug/
 .vs/
 *.sln
-Breakout/Breakout.vcxproj
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
