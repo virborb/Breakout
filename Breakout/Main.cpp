@@ -10,8 +10,9 @@ int main(int argc, char* args[]) {
 		bool quit = false;
 		SDL_Event e;
 		srand((unsigned int) time(NULL));
-		std::vector <Brick> bricks = createTiles();
+		std::vector <Brick> bricks = createBricks();
 		Paddle paddle;
+		Ball ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -36,7 +37,7 @@ int main(int argc, char* args[]) {
 			SDL_Color color = paddle.getColor();
 			SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
 			SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
-			DrawCircle(window.getRenderer(), 200, 200, 7);
+			ball.DrawBall(window.getRenderer());
 
 			window.updateScreen();
 		}
@@ -44,7 +45,7 @@ int main(int argc, char* args[]) {
 	return 0;
 }
 
-std::vector <Brick> createTiles()
+std::vector <Brick> createBricks()
 {
 	int width = Window::SCREEN_WIDTH / 10;
 	int height = Window::SCREEN_HEIGHT / 15;

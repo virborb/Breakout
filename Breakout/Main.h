@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Brick.h"
 #include "Paddle.h"
+#include "Ball.h"
 
 static const int TOTAL_TILES = 50;
 static const int COLUMS = 10;
