@@ -13,6 +13,7 @@
 
 static const int COLUMS = 10;
 static const int ROWS = 5;
+static const int TOTAL_LIVES = 3;
 
 const SDL_MessageBoxButtonData buttons[] = {
         { 0, 0, "no" },

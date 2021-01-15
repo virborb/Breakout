@@ -13,9 +13,12 @@ int main(int argc, char* args[]) {
 		std::vector <Brick> bricks = createBricks();
 		Paddle paddle;
 		Ball ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
-		Text text;
+		Text scoreText;
+		Text livesText;
 		int buttonid = 0;
 		SDL_Color textColor = { 0, 0, 0 };
+		int lives = TOTAL_LIVES;
+	
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -28,7 +31,11 @@ int main(int argc, char* args[]) {
 			}
 			window.clearScreen();
 
-			if (!text.loadFromRenderedText("Score: 45      Lives: 3", textColor, window.getRenderer()))
+			if (!scoreText.loadFromRenderedText("Score: 45", textColor, window.getRenderer()))
+			{
+				printf("Failed to render text texture!\n");
+			}
+			if (!livesText.loadFromRenderedText("Lives: " + std::to_string(lives), textColor, window.getRenderer()))
 			{
 				printf("Failed to render text texture!\n");
 			}
@@ -44,17 +51,26 @@ int main(int argc, char* args[]) {
 			paddle.move();
 			if (!ball.move(&bricks, &paddle))
 			{
-				SDL_ShowMessageBox(&messageboxdata, &buttonid);
-				if (buttonid == 0) {
-					break;
+				if (lives == 0)
+				{
+					SDL_ShowMessageBox(&messageboxdata, &buttonid);
+					if (buttonid == 0) {
+						break;
+					}
+					bricks = createBricks();
+					lives = TOTAL_LIVES;
 				}
-				bricks = createBricks();
+				else 
+				{
+					lives--;
+				}
 				ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 				paddle = Paddle();
 			}
 			SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
 			ball.DrawBall(window.getRenderer());
-			text.render(10, 0, window.getRenderer());
+			scoreText.render(10, 0, window.getRenderer());
+			livesText.render(100, 0, window.getRenderer());
 
 			window.updateScreen();
 		}
