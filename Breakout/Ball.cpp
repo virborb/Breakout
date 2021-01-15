@@ -5,7 +5,7 @@ Ball::Ball(int centreX, int centreY, int radius)
 	this->centreX = centreX;
 	this->centreY = centreY;
 	this->radius = radius;
-	velX = VEL;
+	velX = rand() %  VEL;
 	velY = VEL;
 }
 
@@ -164,15 +164,11 @@ bool Ball::checkCollision(Paddle* paddle)
 		cY = centreY;
 	}
 
-	//If the closest point is inside the circle
 	if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
 	{
-		//This box and the circle have collided
 		return true;
 	}
 
-
-	//If the shapes have not collided
 	return false;
 }
 
