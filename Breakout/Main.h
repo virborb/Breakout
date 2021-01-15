@@ -9,6 +9,7 @@
 #include "Brick.h"
 #include "Paddle.h"
 #include "Ball.h"
+#include "Text.h"
 
 static const int COLUMS = 10;
 static const int ROWS = 5;

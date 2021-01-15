@@ -13,7 +13,9 @@ int main(int argc, char* args[]) {
 		std::vector <Brick> bricks = createBricks();
 		Paddle paddle;
 		Ball ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+		Text text;
 		int buttonid = 0;
+		SDL_Color textColor = { 0, 0, 0 };
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -25,6 +27,11 @@ int main(int argc, char* args[]) {
 				paddle.handleEvent(e);
 			}
 			window.clearScreen();
+
+			if (!text.loadFromRenderedText("Score: 45      Lives: 3", textColor, window.getRenderer()))
+			{
+				printf("Failed to render text texture!\n");
+			}
 
 			for (int i = 0; i < bricks.size(); i++)
 			{
@@ -47,6 +54,7 @@ int main(int argc, char* args[]) {
 			}
 			SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
 			ball.DrawBall(window.getRenderer());
+			text.render(10, 0, window.getRenderer());
 
 			window.updateScreen();
 		}
@@ -57,14 +65,14 @@ int main(int argc, char* args[]) {
 std::vector <Brick> createBricks()
 {
 	int width = Window::SCREEN_WIDTH / 10;
-	int height = Window::SCREEN_HEIGHT / 15;
+	int height = 40;
 	std::vector <Brick> bricks;
 	for (int x = 0; x < COLUMS; x++)
 	{
 		for (int y = 0; y < ROWS; y++)
 		{
 			SDL_Color color = { rand() % 255, rand() % 255, rand() % 255, 0xFF };
-			bricks.push_back(Brick(width * x, height * y, color));
+			bricks.push_back(Brick(width * x, height * y+20, color));
 		}
 	}
 	return bricks;

@@ -9,7 +9,7 @@ public:
 	SDL_Color getColor();
 private:
 	static const int width = Window::SCREEN_WIDTH / 10;
-	static const int height = Window::SCREEN_HEIGHT / 15;
+	static const int height = 40;
 	SDL_Rect rect;
 	SDL_Color color;
 };
