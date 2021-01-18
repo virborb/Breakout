@@ -1,6 +1,6 @@
 #include "Ball.h"
 
-Ball::Ball(int centreX, int centreY, int radius)
+Ball::Ball(int centreX, int centreY, double radius)
 {
 	this->centreX = centreX;
 	this->centreY = centreY;
@@ -157,8 +157,15 @@ bool Ball::checkCollision(Paddle* paddle)
 
 	if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
 	{
+		int deltaX = ((centreX - b->x) / 10) - 5;
+		if (deltaX == 0)
+		{
+			deltaX++;
+		}
+		velX = deltaX;
 		return true;
 	}
+
 
 	return false;
 }
