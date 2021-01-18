@@ -40,6 +40,16 @@ int main(int argc, char* args[]) {
 				printf("Failed to render text texture!\n");
 			}
 
+			if (bricks.empty())
+			{
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
+					"Next Level",
+					"Next level",
+					NULL);
+				bricks = createBricks();
+				ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+				paddle = Paddle();
+			}
 			for (int i = 0; i < bricks.size(); i++)
 			{
 				if (!bricks[i].getIsDead())
