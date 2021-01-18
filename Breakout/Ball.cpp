@@ -5,7 +5,7 @@ Ball::Ball(int centreX, int centreY, int radius)
 	this->centreX = centreX;
 	this->centreY = centreY;
 	this->radius = radius;
-	velX = rand() %  VEL;
+	velX = 1 + (rand() %  VEL/2);
 	velY = VEL;
 }
 
