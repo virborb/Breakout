@@ -54,18 +54,14 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 
 bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 {
-	//Move the dot left or right
 	centreX += velX;
 
-	//If the dot collided or went too far to the left or right
 	if ((centreX - radius < 0) || (centreX + radius > Window::SCREEN_WIDTH) || checkCollision(bricks) || checkCollision(paddle))
 	{
-		//Move back
 		centreX -= velX;
 		velX = -velX;
 	}
 
-	//Move the dot up or down
 	centreY += velY;
 
 	if ((centreY + radius > Window::SCREEN_HEIGHT)) 
@@ -73,10 +69,8 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 		return false;
 	}
 
-	//If the dot collided or went too far up or down
 	if ((centreY - radius < 0) || checkCollision(bricks) || checkCollision(paddle))
 	{
-		//Move back
 		centreY -= velY;
 		velY = -velY;
 	}
@@ -118,16 +112,13 @@ bool Ball::checkCollision(std::vector <Brick>* bricks)
 			cY = centreY;
 		}
 
-		//If the closest point is inside the circle
 		if (distanceSquared(centreX, centreY, cX, cY) < radius * radius)
 		{
-			//This box and the circle have collided
-			bricks->erase(bricks->begin() + i);
+			bricks->operator[](i).setIsDead(true);
 			return true;
 		}
 	}
 
-	//If the shapes have not collided
 	return false;
 }
 

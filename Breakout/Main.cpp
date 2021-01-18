@@ -18,7 +18,7 @@ int main(int argc, char* args[]) {
 		int buttonid = 0;
 		SDL_Color textColor = { 0, 0, 0 };
 		int lives = TOTAL_LIVES;
-	
+		int score = 0;
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -31,7 +31,7 @@ int main(int argc, char* args[]) {
 			}
 			window.clearScreen();
 
-			if (!scoreText.loadFromRenderedText("Score: 45", textColor, window.getRenderer()))
+			if (!scoreText.loadFromRenderedText("Score: " + std::to_string(score), textColor, window.getRenderer()))
 			{
 				printf("Failed to render text texture!\n");
 			}
@@ -42,9 +42,17 @@ int main(int argc, char* args[]) {
 
 			for (int i = 0; i < bricks.size(); i++)
 			{
-				SDL_Color color = bricks[i].getColor();
-				SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
-				SDL_RenderFillRect(window.getRenderer(), bricks[i].getRect());
+				if (!bricks[i].getIsDead())
+				{
+					SDL_Color color = bricks[i].getColor();
+					SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
+					SDL_RenderFillRect(window.getRenderer(), bricks[i].getRect());
+				}
+				else
+				{
+					score += POINTS;
+					bricks.erase(bricks.begin() + i);
+				}
 			}
 			SDL_Color color = paddle.getColor();
 			SDL_SetRenderDrawColor(window.getRenderer(), color.r, color.g, color.b, color.a);
@@ -59,6 +67,7 @@ int main(int argc, char* args[]) {
 					}
 					bricks = createBricks();
 					lives = TOTAL_LIVES;
+					score = 0;
 				}
 				else 
 				{
