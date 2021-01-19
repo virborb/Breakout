@@ -15,10 +15,12 @@ int main(int argc, char* args[]) {
 		Ball ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 		Text scoreText;
 		Text livesText;
+		Text nextLevelText = Text(25);
 		int buttonid = 0;
 		SDL_Color textColor = { 0, 0, 0xFF };
 		int lives = TOTAL_LIVES;
 		int score = 0;
+		int level = 1;
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -42,10 +44,15 @@ int main(int argc, char* args[]) {
 
 			if (bricks.empty())
 			{
-				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
-					"Next Level",
-					"Next level",
-					NULL);
+				level++;
+				if (!nextLevelText.loadFromRenderedText("Level " + std::to_string(level), textColor, window.getRenderer()))
+				{
+					printf("Failed to render text texture!\n");
+				}
+				nextLevelText.render(Window::SCREEN_WIDTH / 2 - nextLevelText.getWidth() / 2, Window::SCREEN_HEIGHT / 2 - nextLevelText.getHeight() / 2, window.getRenderer());
+				window.updateScreen();
+				SDL_Delay(1000);
+				window.clearScreen();
 				bricks = createBricks();
 				ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 				paddle = Paddle();
