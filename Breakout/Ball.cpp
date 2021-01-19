@@ -7,7 +7,7 @@ Ball::Ball(int centreX, int centreY, double radius)
 	this->radius = radius;
 	color = { 0xFF, 0x0, 0x0, 0xFF };
 	velX = 1 + (rand() %  VEL/2);
-	velY = VEL;
+	velY = -VEL;
 }
 
 void Ball::DrawBall(SDL_Renderer* renderer)
