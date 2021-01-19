@@ -5,7 +5,7 @@ Text::Text()
 	texture = NULL;
 	width = 0;
 	height = 0;
-	font = TTF_OpenFont("font/arial.ttf", FONT_SIZE);
+	font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 	if (font == NULL)
 	{
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
@@ -65,6 +65,12 @@ void Text::render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip, double a
 
 	//Render to screen
 	SDL_RenderCopyEx(renderer, texture, clip, &renderQuad, angle, center, flip);
+}
+
+void Text::setFontSize(int fontSize)
+{
+	TTF_CloseFont(font);
+	font = TTF_OpenFont(FONT_PATH, fontSize);
 }
 
 int Text::getWidth()

@@ -13,8 +13,10 @@ public:
 	void render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	int getWidth();
 	int getHeight();
+	void setFontSize(int size);
 private:
 	static const int FONT_SIZE = 15;
+	const char* FONT_PATH = "font/arial.ttf";
 	SDL_Texture* texture;
 	TTF_Font* font;
 	int width;
