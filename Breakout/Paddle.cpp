@@ -2,7 +2,7 @@
 
 Paddle::Paddle() {
 	rect = { Window::SCREEN_WIDTH/2 - WIDTH/2, Window::SCREEN_HEIGHT- 10, WIDTH, HEIGHT };
-	color = {0x00, 0x00, 0x00, 0x00};
+	color = {0xFF, 0xFF, 0xFF, 0xFF};
     velocity = 0;
 }
 

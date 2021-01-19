@@ -16,6 +16,7 @@ public:
 	double distanceSquared(double x1, double y1, double x2, double y2);
 private:
 	static const int VEL = 5;
+	SDL_Color color;
 	int centreX;
 	int centreY; 
 	double radius;

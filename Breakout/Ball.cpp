@@ -5,6 +5,7 @@ Ball::Ball(int centreX, int centreY, double radius)
 	this->centreX = centreX;
 	this->centreY = centreY;
 	this->radius = radius;
+	color = { 0xFF, 0x0, 0x0, 0xFF };
 	velX = 1 + (rand() %  VEL/2);
 	velY = VEL;
 }
@@ -18,6 +19,8 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 	int tx = 1;
 	int ty = 1;
 	int error = (tx - diameter);
+
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
 	while (x >= y)
 	{

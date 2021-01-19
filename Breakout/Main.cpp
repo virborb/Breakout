@@ -16,7 +16,7 @@ int main(int argc, char* args[]) {
 		Text scoreText;
 		Text livesText;
 		int buttonid = 0;
-		SDL_Color textColor = { 0, 0, 0 };
+		SDL_Color textColor = { 0, 0, 0xFF };
 		int lives = TOTAL_LIVES;
 		int score = 0;
 		while (!quit)
