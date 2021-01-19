@@ -1,11 +1,11 @@
 #include "Text.h"
 
-Text::Text()
+Text::Text(int fontSize)
 {
 	texture = NULL;
 	width = 0;
 	height = 0;
-	font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
+	font = TTF_OpenFont(FONT_PATH, fontSize);
 	if (font == NULL)
 	{
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());

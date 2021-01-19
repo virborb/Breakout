@@ -6,7 +6,7 @@
 class Text
 {
 public:
-	Text();
+	Text(int fontSize = 15);
 	~Text();
 	bool loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer);
 	void free();
@@ -15,7 +15,6 @@ public:
 	int getHeight();
 	void setFontSize(int size);
 private:
-	static const int FONT_SIZE = 15;
 	const char* FONT_PATH = "font/arial.ttf";
 	SDL_Texture* texture;
 	TTF_Font* font;
