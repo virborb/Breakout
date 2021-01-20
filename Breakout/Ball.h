@@ -8,6 +8,7 @@
 class Ball
 {
 public:
+	Ball();
 	Ball(int centreX, int centreY, double radius);
 	void DrawBall(SDL_Renderer* renderer);
 	bool move(std::vector <Brick>* bricks, Paddle* paddle);

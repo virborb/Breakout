@@ -1,5 +1,10 @@
 #include "Ball.h"
 
+Ball::Ball()
+{
+	Ball(0, 0, 0);
+}
+
 Ball::Ball(int centreX, int centreY, double radius)
 {
 	this->centreX = centreX;
