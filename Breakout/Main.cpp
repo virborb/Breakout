@@ -2,7 +2,7 @@
 
 int main(int argc, char* args[]) {
 	Window window;
-
+	int buttonid = 0;
 	if (!window.init()) {
 		printf("Failed to initialize!\n");
 	}
@@ -27,9 +27,18 @@ int main(int argc, char* args[]) {
 			breakout.loadInfoBar(window);
 			breakout.renderBricks(window);
 			breakout.moveAndRenderPaddle(window);
-			if (!breakout.moveAndRenderBall(window))
+			if (!breakout.moveAndRenderBall(window) &&
+				breakout.CheckIsDead())
 			{
-				break;
+				SDL_ShowMessageBox(&messageboxdata, &buttonid);
+				if (buttonid == 0)
+				{
+					break;
+				}
+				else
+				{
+					breakout.startNewGame();
+				}
 			}
 
 			window.updateScreen();

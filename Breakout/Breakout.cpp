@@ -5,7 +5,6 @@ Breakout::Breakout()
 	bricks = createBricks();
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 	nextLevelText = Text(25);
-	buttonid = 0;
 	textColor = { 0, 0, 0xFF };
 	lives = TOTAL_LIVES;
 	score = 0;
@@ -87,24 +86,30 @@ bool Breakout::moveAndRenderBall(Window window)
 {
 	if (!ball.move(&bricks, &paddle))
 	{
-		if (lives == 0)
-		{
-			SDL_ShowMessageBox(&messageboxdata, &buttonid);
-			if (buttonid == 0) {
-				return false;
-			}
-			bricks = createBricks();
-			lives = TOTAL_LIVES;
-			score = 0;
-		}
-		else
-		{
-			SDL_Delay(1000);
-			lives--;
-		}
-		ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
-		paddle = Paddle();
+		return false;
 	}
 	ball.DrawBall(window.getRenderer());
 	return true;
+}
+
+bool Breakout::CheckIsDead()
+{
+	if (lives == 0)
+	{
+		return true;
+	}
+	SDL_Delay(1000);
+	lives--;
+	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+	paddle = Paddle();
+	return false;
+}
+
+void Breakout::startNewGame()
+{
+	bricks = createBricks();
+	lives = TOTAL_LIVES;
+	score = 0;
+	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+	paddle = Paddle();
 }
