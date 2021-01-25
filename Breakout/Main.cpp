@@ -11,6 +11,7 @@ int main(int argc, char* args[]) {
 		SDL_Event e;
 		srand((unsigned int) time(NULL));
 		Breakout breakout;
+		EndScreen endScreen = EndScreen(window.getRenderer());
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -30,14 +31,20 @@ int main(int argc, char* args[]) {
 			if (!breakout.moveAndRenderBall(window) &&
 				breakout.CheckIsDead())
 			{
-				SDL_ShowMessageBox(&messageboxdata, &buttonid);
-				if (buttonid == 0)
+				window.clearScreen();
+				endScreen.render(window.getRenderer());
+				window.updateScreen();
+				while (SDL_PollEvent(&e) != 0)
 				{
-					break;
-				}
-				else
-				{
-					breakout.startNewGame();
+					switch (endScreen.handleEvent(&e))
+					{
+					case EndScreen::NEW_GAME:
+						breakout.startNewGame();
+						break;
+					case EndScreen::QUIT:
+						quit = true;
+						break;
+					}
 				}
 			}
 
