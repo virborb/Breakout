@@ -33,7 +33,7 @@ void Breakout::checkNextLevel(Window window)
 	{
 		bricks = createBricks();
 		ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
-		ball.setSpeed(1 + (0.25 * level));
+		ball.setSpeed(1 + (0.10 * level));
 		paddle.centerPaddle();
 		paddle.increaseVelocity();
 		paddle.decreaseWidth();
