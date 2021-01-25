@@ -98,7 +98,6 @@ bool Breakout::CheckIsDead()
 	{
 		return true;
 	}
-	SDL_Delay(1000);
 	lives--;
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 	paddle = Paddle();
