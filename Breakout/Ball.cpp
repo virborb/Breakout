@@ -11,8 +11,9 @@ Ball::Ball(int centreX, int centreY, double radius)
 	this->centreY = centreY;
 	this->radius = radius;
 	color = { 0xFF, 0x0, 0x0, 0xFF };
-	velX = 1 + (rand() %  VEL/2);
+	velX = 1 + (double)(rand() %  VEL/2);
 	velY = -VEL;
+	speed = 1;
 }
 
 void Ball::DrawBall(SDL_Renderer* renderer)
@@ -82,6 +83,7 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 		centreY -= velY;
 		velY = -velY;
 	}
+	printf("velX: %f, velY: %f\n", velX, velY);
 	return true;
 }
 
@@ -170,7 +172,7 @@ bool Ball::checkCollision(Paddle* paddle)
 		{
 			deltaX++;
 		}
-		velX = deltaX;
+		velX = deltaX * speed;
 		return true;
 	}
 
@@ -183,4 +185,16 @@ double Ball::distanceSquared(double x1, double y1, double x2, double y2)
 	double deltaX = x2 - x1;
 	double deltaY = y2 - y1;
 	return deltaX * deltaX + deltaY * deltaY;
+}
+
+double Ball::getSpeed()
+{
+	return speed;
+}
+
+void Ball::setSpeed(double speed)
+{
+	this->speed = speed;
+	velX = velX * speed;
+	velY = velY * speed;
 }

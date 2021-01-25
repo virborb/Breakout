@@ -31,6 +31,10 @@ void Breakout::checkNextLevel(Window window)
 {
 	if (bricks.empty())
 	{
+		bricks = createBricks();
+		ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+		ball.setSpeed(1 + (0.25 * level));
+		paddle = Paddle();
 		level++;
 		nextLevelText.loadFromRenderedText("Level " + std::to_string(level), textColor, window.getRenderer());
 		nextLevelText.render(Window::SCREEN_WIDTH / 2 - nextLevelText.getWidth() / 2,
@@ -38,9 +42,6 @@ void Breakout::checkNextLevel(Window window)
 		window.updateScreen();
 		SDL_Delay(1000);
 		window.clearScreen();
-		bricks = createBricks();
-		ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
-		paddle = Paddle();
 	}
 }
 
@@ -99,7 +100,9 @@ bool Breakout::CheckIsDead()
 		return true;
 	}
 	lives--;
+	double speed = ball.getSpeed();
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
+	ball.setSpeed(speed);
 	paddle = Paddle();
 	return false;
 }
@@ -107,6 +110,7 @@ bool Breakout::CheckIsDead()
 void Breakout::startNewGame()
 {
 	bricks = createBricks();
+	level = 1;
 	lives = TOTAL_LIVES;
 	score = 0;
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
