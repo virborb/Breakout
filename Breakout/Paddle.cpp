@@ -14,8 +14,8 @@ void Paddle::handleEvent(SDL_Event& e)
         //Adjust the velocity
         switch (e.key.keysym.sym)
         {
-        case SDLK_a: velocity -= VEL; break;
-        case SDLK_d: velocity += VEL; break;
+        case SDLK_a: velocity -= speed; break;
+        case SDLK_d: velocity += speed; break;
         }
     }
     //If a key was released
@@ -25,8 +25,8 @@ void Paddle::handleEvent(SDL_Event& e)
             //Adjust the velocity
             switch (e.key.keysym.sym)
             {
-            case SDLK_a: velocity += VEL; break;
-            case SDLK_d: velocity -= VEL; break;
+            case SDLK_a: velocity += speed; break;
+            case SDLK_d: velocity -= speed; break;
             }
         }
     }
@@ -36,10 +36,15 @@ void Paddle::move()
 {
     rect.x += velocity;
 
-    if ((rect.x < 0) || (rect.x + WIDTH > Window::SCREEN_WIDTH))
+    if ((rect.x < 0) || (rect.x + rect.w > Window::SCREEN_WIDTH))
     {
         rect.x -= velocity;
     }
+}
+
+void Paddle::centerPaddle()
+{
+    rect.x = Window::SCREEN_WIDTH / 2 - rect.w / 2;
 }
 
 SDL_Rect* Paddle::getRect()
@@ -50,4 +55,14 @@ SDL_Rect* Paddle::getRect()
 SDL_Color Paddle::getColor()
 {
 	return color;
+}
+
+void Paddle::increaseVelocity()
+{
+    speed = speed + 0.5;
+}
+
+void Paddle::decreaseWidth()
+{
+    rect.w = rect.w * 0.90;
 }

@@ -34,7 +34,9 @@ void Breakout::checkNextLevel(Window window)
 		bricks = createBricks();
 		ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 		ball.setSpeed(1 + (0.25 * level));
-		paddle = Paddle();
+		paddle.centerPaddle();
+		paddle.increaseVelocity();
+		paddle.decreaseWidth();
 		level++;
 		nextLevelText.loadFromRenderedText("Level " + std::to_string(level), textColor, window.getRenderer());
 		nextLevelText.render(Window::SCREEN_WIDTH / 2 - nextLevelText.getWidth() / 2,
@@ -103,7 +105,7 @@ bool Breakout::CheckIsDead()
 	double speed = ball.getSpeed();
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 	ball.setSpeed(speed);
-	paddle = Paddle();
+	paddle.centerPaddle();
 	return false;
 }
 
