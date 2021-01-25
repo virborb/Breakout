@@ -10,7 +10,8 @@ public:
     bool handleEvent(SDL_Event* e);
     void render(SDL_Renderer* renderer);
     void setText(std::string str, SDL_Color textColor, SDL_Renderer* renderer);
-
+    int getWidth();
+    int getHeight();
 private:
     static const int WIDTH = 100;
     static const int HEIGHT = 20;

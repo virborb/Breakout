@@ -6,13 +6,23 @@ Button::Button()
     rect.y = 0;
     rect.w = WIDTH;
     rect.h = HEIGHT;
-    color = { 0x0, 0xFF, 0x0 };
+    color = { 0x0, 0x0, 0xFF };
 }
 
 void Button::setPosition(int x, int y)
 {
     rect.x = x;
     rect.y = y;
+}
+
+int Button::getWidth()
+{
+    return rect.w;
+}
+
+int Button::getHeight()
+{
+    return rect.h;
 }
 
 void Button::setText(std::string str, SDL_Color textColor, SDL_Renderer* renderer)
@@ -39,5 +49,5 @@ void Button::render(SDL_Renderer* renderer)
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rect);
-    text.render(rect.x + rect.w/2, rect.y + rect.h/2, renderer);
+    text.render(rect.x + rect.w/2 - text.getWidth()/2 , rect.y, renderer);
 }
