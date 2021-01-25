@@ -83,7 +83,6 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 		centreY -= velY;
 		velY = -velY;
 	}
-	printf("velX: %f, velY: %f\n", velX, velY);
 	return true;
 }
 
