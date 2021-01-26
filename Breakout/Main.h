@@ -4,5 +4,8 @@
 
 #include "Breakout.h"
 #include "EndScreen.h"
+#include "StartScreen.h"
+
+enum class Screen {Start, Game, End};
 
 
