@@ -14,6 +14,7 @@ int main(int argc, char* args[]) {
 		Breakout breakout;
 		StartScreen startScreen = StartScreen(window.getRenderer());
 		EndScreen endScreen = EndScreen(window.getRenderer());
+		HighScoreScreen highscore = HighScoreScreen(window.getRenderer());
 		while (!quit)
 		{
 			int action = 0;
@@ -34,6 +35,8 @@ int main(int argc, char* args[]) {
 				case Screen::End:
 					action = endScreen.handleEvent(&e);
 					break;
+				case Screen::HighScore:
+					action = highscore.handleEvent(&e);
 				}
 			}
 			window.clearScreen();
@@ -59,11 +62,24 @@ int main(int argc, char* args[]) {
 				if (!breakout.moveAndRenderBall(window) &&
 					breakout.CheckIsDead())
 				{
-					screen = Screen::End;
+					screen = Screen::HighScore;
 				}
 				break;
 			case Screen::End:
 				endScreen.render(window.getRenderer());
+				switch (action)
+				{
+				case EndScreen::NEW_GAME:
+					breakout.startNewGame();
+					screen = Screen::Game;
+					break;
+				case EndScreen::QUIT:
+					quit = true;
+					break;
+				}
+				break;
+			case Screen::HighScore:
+				highscore.render(window.getRenderer());
 				switch (action)
 				{
 				case EndScreen::NEW_GAME:

@@ -39,3 +39,5 @@ Debug/
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+
+database.h
