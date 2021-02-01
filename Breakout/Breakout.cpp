@@ -118,3 +118,8 @@ void Breakout::startNewGame()
 	ball = Ball(Window::SCREEN_WIDTH / 2 - 7 / 2, Window::SCREEN_HEIGHT - 18, 7);
 	paddle = Paddle();
 }
+
+int Breakout::getScore()
+{
+	return score;
+}

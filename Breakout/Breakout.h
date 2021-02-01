@@ -21,6 +21,7 @@ public:
 	bool moveAndRenderBall(Window window);
 	bool CheckIsDead();
 	void startNewGame();
+	int getScore();
 private:
 	static const int COLUMS = 10;
 	static const int ROWS = 5;
