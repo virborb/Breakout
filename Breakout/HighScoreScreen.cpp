@@ -45,20 +45,24 @@ void HighScoreScreen::connectDB()
 
 	conn = mysql_real_connect(conn, HOST, USER, PASS, DB, PORT, NULL, 0);
 
-	if (!conn) {
+	if (!conn)
+	{
 		std::cerr << "Failed to connect to database: Error: " << mysql_error(conn);
 	}
 }
 
 void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 {
-	int qstate;
+	int qstate = -1;
 	MYSQL_ROW row;
 	MYSQL_RES* res;
 	SDL_Color color = { 0, 0xFF, 0 };
 	std::string query = "SELECT * FROM `Highscore` ORDER BY `Score` DESC LIMIT 10";
 	const char* q = query.c_str();
-	qstate = mysql_query(conn, q);
+	if (conn)
+	{
+		qstate = mysql_query(conn, q);
+	}
 	scores.clear();
 	if (!qstate)
 	{
