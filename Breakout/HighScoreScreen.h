@@ -22,8 +22,13 @@ public:
 	void connectDB();
 	void collectHighscores(SDL_Renderer* renderer);
 private:
+	struct Highscore
+	{
+		Text name;
+		Text score;
+	};
 	Text title;
-	std::vector <Text*> scores;
+	std::vector <Highscore*> scores;
 	Button newGame;
 	Button quit;
 	MYSQL* conn;

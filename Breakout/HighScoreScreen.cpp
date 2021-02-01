@@ -27,7 +27,8 @@ void HighScoreScreen::render(SDL_Renderer* renderer)
 	int positionY = -75;
 	for (auto& score : scores)
 	{
-		score->render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
+		score->name.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
+		score->score.render(Window::SCREEN_WIDTH / 2 + 50, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
 		positionY += 15;
 	}
 	positionY += 20;
@@ -66,16 +67,17 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 		{
 			std::stringstream stream;
 			stream << row[1] << ' ' << row[2];
-			Text *score = new Text();
-			score->loadFromRenderedText(stream.str(), color, renderer);
-			scores.push_back(score);
+			Highscore* highscore = new Highscore();
+			highscore->name.loadFromRenderedText(row[1], color, renderer);
+			highscore->score.loadFromRenderedText(row[2], color, renderer);
+			scores.push_back(highscore);
 		}
 	}
 	else
 	{
 		std::cerr << "Query failed: " << mysql_error(conn) << std::endl;
-		Text* score = new Text();
-		score->loadFromRenderedText("Failed to get highscores", color, renderer);
-		scores.push_back(score);
+		Highscore* highscore = new Highscore();
+		highscore->name.loadFromRenderedText("Failed to get highscores", color, renderer);
+		scores.push_back(highscore);
 	}
 }
