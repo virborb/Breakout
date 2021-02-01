@@ -6,6 +6,7 @@ HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 	title.loadFromRenderedText("Highscore", color, renderer);
 	newGame.setText("New game", color, renderer);
 	quit.setText("Quit game", color, renderer);
+	conn = NULL;
 }
 
 int HighScoreScreen::handleEvent(SDL_Event* e)
@@ -23,11 +24,6 @@ int HighScoreScreen::handleEvent(SDL_Event* e)
 void HighScoreScreen::render(SDL_Renderer* renderer)
 {
 	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT/2 - 45, renderer);
-	//first.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 - 30, renderer);
-	//second.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 - 15, renderer);
-	//third.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2, renderer);
-	//fourth.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + 15 , renderer);
-	//fifth.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + 30, renderer);
 	int positionY = -30;
 	for (auto& score : scores)
 	{
@@ -48,12 +44,8 @@ void HighScoreScreen::connectDB()
 
 	conn = mysql_real_connect(conn, HOST, USER, PASS, DB, PORT, NULL, 0);
 
-	if (conn) {
-		puts("Successful connection to database!");
-	}
-	else {
-		fprintf(stderr, "Failed to connect to database: Error: %s\n",
-			mysql_error(conn));
+	if (!conn) {
+		std::cerr << "Failed to connect to database: Error: " << mysql_error(conn);
 	}
 }
 
@@ -72,7 +64,6 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 		res = mysql_store_result(conn);
 		while (row = mysql_fetch_row(res))
 		{
-			printf("ID: %s, Name: %s, Value: %s\n", row[0], row[1], row[2]);
 			std::stringstream stream;
 			stream << row[1] << ' ' << row[2];
 			Text *score = new Text();
@@ -82,7 +73,7 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 	}
 	else
 	{
-		std::cout << "Query failed: " << mysql_error(conn) << std::endl;
+		std::cerr << "Query failed: " << mysql_error(conn) << std::endl;
 		Text* score = new Text();
 		score->loadFromRenderedText("Failed to get highscores", color, renderer);
 		scores.push_back(score);
