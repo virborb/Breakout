@@ -15,6 +15,7 @@ int main(int argc, char* args[]) {
 		StartScreen startScreen = StartScreen(window.getRenderer());
 		EndScreen endScreen = EndScreen(window.getRenderer());
 		HighScoreScreen highscore = HighScoreScreen(window.getRenderer());
+		highscore.connectDB();
 		while (!quit)
 		{
 			int action = 0;
@@ -63,6 +64,7 @@ int main(int argc, char* args[]) {
 					breakout.CheckIsDead())
 				{
 					screen = Screen::HighScore;
+					highscore.collectHighscores(window.getRenderer());
 				}
 				break;
 			case Screen::End:
