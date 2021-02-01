@@ -10,6 +10,7 @@ int main(int argc, char* args[]) {
 		bool quit = false;
 		Screen screen = Screen::Start;
 		SDL_Event e;
+		SDL_StartTextInput();
 		srand((unsigned int) time(NULL));
 		Breakout breakout;
 		StartScreen startScreen = StartScreen(window.getRenderer());
@@ -64,6 +65,7 @@ int main(int argc, char* args[]) {
 					breakout.CheckIsDead())
 				{
 					screen = Screen::HighScore;
+					bool newScore = highscore.checkNewHighscore(breakout.getScore(), window.getRenderer());
 					highscore.collectHighscores(window.getRenderer());
 				}
 				break;

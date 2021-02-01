@@ -7,6 +7,7 @@ HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 	newGame.setText("New game", color, renderer);
 	quit.setText("Quit game", color, renderer);
 	conn = NULL;
+	renderInput = true;
 }
 
 int HighScoreScreen::handleEvent(SDL_Event* e)
@@ -18,6 +19,40 @@ int HighScoreScreen::handleEvent(SDL_Event* e)
 	{
 		return QUIT;
 	}
+	if (e->type == SDL_KEYDOWN)
+	{
+		//Handle backspace
+		if (e->key.keysym.sym == SDLK_BACKSPACE && input.length() > 0)
+		{
+			//lop off character
+			input.pop_back();
+			renderInput = true;
+		}
+		//Handle copy
+		else if (e->key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
+		{
+			SDL_SetClipboardText(input.c_str());
+		}
+		//Handle paste
+		else if (e->key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL)
+		{
+			input = SDL_GetClipboardText();
+			renderInput = true;
+		}
+	}
+	else if (e->type == SDL_TEXTINPUT)
+	{
+		//Not copy or pasting
+		if (!(SDL_GetModState() & KMOD_CTRL && (e->text.text[0] == 'c' || e->text.text[0] == 'C' || e->text.text[0] == 'v' || e->text.text[0] == 'V')))
+		{
+			//Append character
+			if (input.size() < 30)
+			{
+				input += e->text.text;
+				renderInput = true;
+			}
+		}
+	}
 	return NO_ACTION;
 }
 
@@ -27,8 +62,8 @@ void HighScoreScreen::render(SDL_Renderer* renderer)
 	int positionY = -75;
 	for (auto& score : scores)
 	{
-		score->name.render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
-		score->score.render(Window::SCREEN_WIDTH / 2 + 50, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
+		score->name.render(Window::SCREEN_WIDTH / 2 - 150, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
+		score->score.render(Window::SCREEN_WIDTH / 2 + 100, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
 		positionY += 15;
 	}
 	positionY += 20;
@@ -36,7 +71,28 @@ void HighScoreScreen::render(SDL_Renderer* renderer)
 	quit.setPosition(Window::SCREEN_WIDTH / 2 + 10, Window::SCREEN_HEIGHT / 2 + positionY);
 	newGame.render(renderer);
 	quit.render(renderer);
+}
 
+void HighScoreScreen::renderNewHighscore(SDL_Renderer* renderer)
+{
+	if (renderInput)
+	{
+		SDL_Color color = { 0, 0xFF, 0 };
+		//Text is not empty
+		if (input != "")
+		{
+			//Render new text
+			inputText.loadFromRenderedText(input.c_str(), color, renderer);
+		}
+		//Text is empty
+		else
+		{
+			//Render space texture
+			inputText.loadFromRenderedText(" ", color, renderer);
+		}
+		inputText.render(Window::SCREEN_WIDTH / 2 + 10, Window::SCREEN_HEIGHT / 2, renderer);
+	}
+	renderInput = false;
 }
 
 void HighScoreScreen::connectDB()
@@ -69,8 +125,6 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 		res = mysql_store_result(conn);
 		while (row = mysql_fetch_row(res))
 		{
-			std::stringstream stream;
-			stream << row[1] << ' ' << row[2];
 			Highscore* highscore = new Highscore();
 			highscore->name.loadFromRenderedText(row[1], color, renderer);
 			highscore->score.loadFromRenderedText(row[2], color, renderer);
@@ -84,4 +138,31 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 		highscore->name.loadFromRenderedText("Failed to get highscores", color, renderer);
 		scores.push_back(highscore);
 	}
+}
+
+bool HighScoreScreen::checkNewHighscore(int score, SDL_Renderer* renderer)
+{
+	int qstate = -1;
+	MYSQL_ROW row;
+	MYSQL_RES* res;
+	SDL_Color color = { 0, 0xFF, 0 };
+	std::string query = "SELECT COUNT(*) FROM `Highscore` WHERE `Score` > " + std::to_string(score);
+	const char* q = query.c_str();
+	if (conn)
+	{
+		qstate = mysql_query(conn, q);
+		
+	}
+	scores.clear();
+	if (!qstate)
+	{
+		res = mysql_store_result(conn);
+		row = mysql_fetch_row(res);
+		return (std::atoi(row[0]) < 10);
+	}
+	std::cerr << "Query failed: " << mysql_error(conn) << std::endl;
+	Highscore* highscore = new Highscore();
+	highscore->name.loadFromRenderedText("Failed to check if new highscore", color, renderer);
+	scores.push_back(highscore);
+	return false;
 }

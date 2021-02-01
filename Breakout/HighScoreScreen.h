@@ -19,8 +19,10 @@ public:
 	HighScoreScreen(SDL_Renderer* renderer);
 	int handleEvent(SDL_Event* e);
 	void render(SDL_Renderer* renderer);
+	void renderNewHighscore(SDL_Renderer* renderer);
 	void connectDB();
 	void collectHighscores(SDL_Renderer* renderer);
+	bool checkNewHighscore(int score, SDL_Renderer* renderer);
 private:
 	struct Highscore
 	{
@@ -28,6 +30,9 @@ private:
 		Text score;
 	};
 	Text title;
+	Text inputText;
+	std::string input;
+	bool renderInput;
 	std::vector <Highscore*> scores;
 	Button newGame;
 	Button quit;
