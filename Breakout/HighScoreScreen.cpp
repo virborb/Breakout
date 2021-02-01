@@ -23,8 +23,8 @@ int HighScoreScreen::handleEvent(SDL_Event* e)
 
 void HighScoreScreen::render(SDL_Renderer* renderer)
 {
-	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT/2 - 45, renderer);
-	int positionY = -30;
+	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT/2 - 90, renderer);
+	int positionY = -75;
 	for (auto& score : scores)
 	{
 		score->render(Window::SCREEN_WIDTH / 2 - 100, Window::SCREEN_HEIGHT / 2 + positionY, renderer);
