@@ -4,8 +4,11 @@ HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
 	title.loadFromRenderedText("Highscore", color, renderer);
+	newHighscore.loadFromRenderedText("New Highscore, Enter name to submit score.", color, renderer);
+	inputRect = { Window::SCREEN_WIDTH / 2 - newGame.getWidth() - 25, Window::SCREEN_HEIGHT / 2, 250, 20 };
 	newGame.setText("New game", color, renderer);
 	quit.setText("Quit game", color, renderer);
+	submit.setText("Submit score", color, renderer);
 	conn = NULL;
 	renderInput = true;
 }
@@ -90,8 +93,17 @@ void HighScoreScreen::renderNewHighscore(SDL_Renderer* renderer)
 			//Render space texture
 			inputText.loadFromRenderedText(" ", color, renderer);
 		}
-		inputText.render(Window::SCREEN_WIDTH / 2 + 10, Window::SCREEN_HEIGHT / 2, renderer);
 	}
+	newHighscore.render(Window::SCREEN_WIDTH / 2 - newHighscore.getWidth() / 2, Window::SCREEN_HEIGHT / 2 - 20, renderer);
+	inputText.render(Window::SCREEN_WIDTH / 2 - newGame.getWidth() - 20, Window::SCREEN_HEIGHT / 2, renderer);
+	SDL_SetRenderDrawColor(renderer, 0, 0xFF, 0, 0xFF);
+	SDL_RenderDrawRect(renderer, &inputRect);
+	submit.setPosition(Window::SCREEN_WIDTH / 2 - newGame.getWidth() / 2 - submit.getWidth() - 5, Window::SCREEN_HEIGHT / 2 + 25);
+	newGame.setPosition(Window::SCREEN_WIDTH / 2 - newGame.getWidth() / 2, Window::SCREEN_HEIGHT / 2 + 25);
+	quit.setPosition(Window::SCREEN_WIDTH / 2 + newGame.getWidth() / 2 + 5, Window::SCREEN_HEIGHT / 2 + 25);
+	submit.render(renderer);
+	newGame.render(renderer);
+	quit.render(renderer);
 	renderInput = false;
 }
 
