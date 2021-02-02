@@ -8,6 +8,7 @@ int main(int argc, char* args[]) {
 	}
 	else {
 		bool quit = false;
+		bool newScore = false;
 		Screen screen = Screen::Start;
 		SDL_Event e;
 		SDL_StartTextInput();
@@ -65,7 +66,7 @@ int main(int argc, char* args[]) {
 					breakout.CheckIsDead())
 				{
 					screen = Screen::HighScore;
-					bool newScore = highscore.checkNewHighscore(breakout.getScore(), window.getRenderer());
+					newScore = highscore.checkNewHighscore(breakout.getScore(), window.getRenderer());
 					highscore.collectHighscores(window.getRenderer());
 				}
 				break;
@@ -83,7 +84,14 @@ int main(int argc, char* args[]) {
 				}
 				break;
 			case Screen::HighScore:
-				highscore.render(window.getRenderer());
+				if (newScore)
+				{
+					highscore.renderNewHighscore(window.getRenderer());
+				}
+				else
+				{
+					highscore.render(window.getRenderer());
+				}
 				switch (action)
 				{
 				case EndScreen::NEW_GAME:
