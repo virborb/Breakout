@@ -10,16 +10,16 @@ EndScreen::EndScreen(SDL_Renderer* renderer)
 	quit.setPosition(Window::SCREEN_WIDTH / 2 + 10, Window::SCREEN_HEIGHT / 2 + text.getHeight());
 }
 
-int EndScreen::handleEvent(SDL_Event* e)
+Action EndScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
-		return NEW_GAME;
+		return Action::NewGame;
 	}
 	else if (quit.handleEvent(e))
 	{
-		return QUIT;
+		return Action::Quit;
 	}
-	return NO_ACTION;
+	return Action::NoAction;
 }
 
 void EndScreen::render(SDL_Renderer* renderer)

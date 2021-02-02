@@ -13,14 +13,18 @@ HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 	renderInput = true;
 }
 
-int HighScoreScreen::handleEvent(SDL_Event* e)
+Action HighScoreScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
-		return NEW_GAME;
+		return Action::NewGame;
 	}
 	else if (quit.handleEvent(e))
 	{
-		return QUIT;
+		return Action::Quit;
+	}
+	else if (submit.handleEvent(e))
+	{
+		return Action::Submit;
 	}
 	if (e->type == SDL_KEYDOWN)
 	{
@@ -56,7 +60,7 @@ int HighScoreScreen::handleEvent(SDL_Event* e)
 			}
 		}
 	}
-	return NO_ACTION;
+	return Action::NoAction;
 }
 
 void HighScoreScreen::render(SDL_Renderer* renderer)

@@ -20,7 +20,7 @@ int main(int argc, char* args[]) {
 		highscore.connectDB();
 		while (!quit)
 		{
-			int action = 0;
+			Action action = Action::NoAction;
 			while (SDL_PollEvent(&e) != 0)
 			{
 				if (e.type == SDL_QUIT)
@@ -49,10 +49,10 @@ int main(int argc, char* args[]) {
 				startScreen.render(window.getRenderer());
 				switch (action)
 				{
-				case StartScreen::NEW_GAME:
+				case Action::NewGame:
 					screen = Screen::Game;
 					break;
-				case StartScreen::QUIT:
+				case Action::Quit:
 					quit = true;
 					break;
 				}
@@ -74,11 +74,11 @@ int main(int argc, char* args[]) {
 				endScreen.render(window.getRenderer());
 				switch (action)
 				{
-				case EndScreen::NEW_GAME:
+				case Action::NewGame:
 					breakout.startNewGame();
 					screen = Screen::Game;
 					break;
-				case EndScreen::QUIT:
+				case Action::Quit:
 					quit = true;
 					break;
 				}
@@ -94,11 +94,11 @@ int main(int argc, char* args[]) {
 				}
 				switch (action)
 				{
-				case EndScreen::NEW_GAME:
+				case Action::NewGame:
 					breakout.startNewGame();
 					screen = Screen::Game;
 					break;
-				case EndScreen::QUIT:
+				case Action::Quit:
 					quit = true;
 					break;
 				}
