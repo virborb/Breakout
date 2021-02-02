@@ -17,6 +17,7 @@ int main(int argc, char* args[]) {
 		StartScreen startScreen = StartScreen(window.getRenderer());
 		EndScreen endScreen = EndScreen(window.getRenderer());
 		HighScoreScreen highscore = HighScoreScreen(window.getRenderer());
+		SubmitScreen submit = SubmitScreen(window.getRenderer());
 		highscore.connectDB();
 		while (!quit)
 		{
@@ -40,6 +41,9 @@ int main(int argc, char* args[]) {
 					break;
 				case Screen::HighScore:
 					action = highscore.handleEvent(&e);
+					break;
+				case Screen::Submit:
+					action = submit.handleEvent(&e);
 				}
 			}
 			window.clearScreen();
@@ -65,9 +69,15 @@ int main(int argc, char* args[]) {
 				if (!breakout.moveAndRenderBall(window) &&
 					breakout.CheckIsDead())
 				{
-					screen = Screen::HighScore;
-					newScore = highscore.checkNewHighscore(breakout.getScore(), window.getRenderer());
-					highscore.collectHighscores(window.getRenderer());
+					if (highscore.checkNewHighscore(breakout.getScore(), window.getRenderer()))
+					{
+						screen = Screen::Submit;
+					}
+					else
+					{
+						screen = Screen::HighScore;
+						highscore.collectHighscores(window.getRenderer());
+					}
 				}
 				break;
 			case Screen::End:
@@ -84,14 +94,7 @@ int main(int argc, char* args[]) {
 				}
 				break;
 			case Screen::HighScore:
-				if (newScore)
-				{
-					highscore.renderNewHighscore(window.getRenderer());
-				}
-				else
-				{
-					highscore.render(window.getRenderer());
-				}
+				highscore.render(window.getRenderer());
 				switch (action)
 				{
 				case Action::NewGame:
@@ -100,6 +103,23 @@ int main(int argc, char* args[]) {
 					break;
 				case Action::Quit:
 					quit = true;
+					break;
+				}
+				break;
+			case Screen::Submit:
+				submit.render(window.getRenderer());
+				switch (action)
+				{
+				case Action::NewGame:
+					breakout.startNewGame();
+					screen = Screen::Game;
+					break;
+				case Action::Quit:
+					quit = true;
+					break;
+				case Action::Submit:
+					highscore.collectHighscores(window.getRenderer());
+					screen = Screen::HighScore;
 					break;
 				}
 				break;

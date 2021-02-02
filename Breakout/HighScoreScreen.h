@@ -28,15 +28,9 @@ private:
 		Text score;
 	};
 	Text title;
-	Text newHighscore;
-	Text inputText;
-	SDL_Rect inputRect;
-	std::string input;
-	bool renderInput;
 	std::vector <Highscore*> scores;
 	Button newGame;
 	Button quit;
-	Button submit;
 	MYSQL* conn;
 };
 
