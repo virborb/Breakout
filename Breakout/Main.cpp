@@ -59,6 +59,10 @@ int main(int argc, char* args[]) {
 				case Action::Quit:
 					quit = true;
 					break;
+				case Action::Highscore:
+					screen = Screen::HighScore;
+					highscore.collectHighscores(window.getRenderer());
+					break;
 				}
 				break;
 			case Screen::Game:

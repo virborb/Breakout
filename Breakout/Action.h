@@ -5,5 +5,6 @@ enum class Action
 	NoAction,
 	NewGame,
 	Quit,
-	Submit
+	Submit,
+	Highscore
 };

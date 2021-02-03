@@ -12,8 +12,9 @@ public:
 	void render(SDL_Renderer* renderer);
 	Action handleEvent(SDL_Event* e);
 private:
-	Text text;
+	Text title;
 	Button newGame;
+	Button highscore;
 	Button quit;
 };
 
