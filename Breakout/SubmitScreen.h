@@ -11,9 +11,10 @@ class SubmitScreen
 public:
 	SubmitScreen(SDL_Renderer* renderer);
 	Action handleEvent(SDL_Event* e);
-	void render(SDL_Renderer* renderer);
+	void render(int score, SDL_Renderer* renderer);
 	std::string getName();
 private:
+	Text title;
 	Text newHighscore;
 	Text inputText;
 	SDL_Rect inputRect;

@@ -107,7 +107,8 @@ int main(int argc, char* args[]) {
 				}
 				break;
 			case Screen::Submit:
-				submit.render(window.getRenderer());
+				int score = breakout.getScore();
+				submit.render(score, window.getRenderer());
 				switch (action)
 				{
 				case Action::NewGame:
@@ -118,7 +119,6 @@ int main(int argc, char* args[]) {
 					quit = true;
 					break;
 				case Action::Submit:
-					int score = breakout.getScore();
 					highscore.submitScore(&score, submit.getName());
 					highscore.collectHighscores(window.getRenderer());
 					screen = Screen::HighScore;

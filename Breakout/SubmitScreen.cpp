@@ -3,7 +3,8 @@
 SubmitScreen::SubmitScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
-	newHighscore.loadFromRenderedText("New Highscore, Enter name to submit score.", color, renderer);
+	title = Text(30);
+	title.loadFromRenderedText("Game Over", color, renderer);
 	inputRect = { Window::SCREEN_WIDTH / 2 - newGame.getWidth() - 25, Window::SCREEN_HEIGHT / 2, 250, 20 };
 	newGame.setText("New game", color, renderer);
 	quit.setText("Quit game", color, renderer);
@@ -55,11 +56,11 @@ Action SubmitScreen::handleEvent(SDL_Event* e)
 	return Action::NoAction;
 }
 
-void SubmitScreen::render(SDL_Renderer* renderer)
+void SubmitScreen::render(int score, SDL_Renderer* renderer)
 {
+	SDL_Color color = { 0, 0xFF, 0 };
 	if (renderInput)
 	{
-		SDL_Color color = { 0, 0xFF, 0 };
 		if (input != "")
 		{
 			inputText.loadFromRenderedText(input.c_str(), color, renderer);
@@ -70,6 +71,8 @@ void SubmitScreen::render(SDL_Renderer* renderer)
 			inputText.loadFromRenderedText(" ", color, renderer);
 		}
 	}
+	newHighscore.loadFromRenderedText("Your score is "  + std::to_string(score) +  ", Enter name to submit score.", color, renderer);
+	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT / 2 - 100, renderer);
 	newHighscore.render(Window::SCREEN_WIDTH / 2 - newHighscore.getWidth() / 2, Window::SCREEN_HEIGHT / 2 - 20, renderer);
 	inputText.render(Window::SCREEN_WIDTH / 2 - newGame.getWidth() - 20, Window::SCREEN_HEIGHT / 2, renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0xFF, 0, 0xFF);
