@@ -12,6 +12,7 @@ public:
 	SubmitScreen(SDL_Renderer* renderer);
 	Action handleEvent(SDL_Event* e);
 	void render(SDL_Renderer* renderer);
+	std::string getName();
 private:
 	Text newHighscore;
 	Text inputText;

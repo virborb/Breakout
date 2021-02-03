@@ -109,3 +109,51 @@ bool HighScoreScreen::checkNewHighscore(int score, SDL_Renderer* renderer)
 	scores.push_back(highscore);
 	return false;
 }
+
+void HighScoreScreen::show_stmt_error(MYSQL_STMT* stmt)
+{
+	printf("Error(%d) [%s] \"%s\"", mysql_stmt_errno(stmt),
+		mysql_stmt_sqlstate(stmt),
+		mysql_stmt_error(stmt));
+	exit(-1);
+}
+
+void HighScoreScreen::submitScore(int* score, std::string name)
+{
+	MYSQL_STMT* stmt;
+	MYSQL_BIND bind[3];
+	/* Data for insert */
+	std::string query = "INSERT INTO Highscore VALUES (?,?,?)";
+	char id_ind[] = { STMT_INDICATOR_NULL };
+	unsigned long nameLen = name.size();
+	unsigned int array_size = 1;
+
+	stmt = mysql_stmt_init(conn);
+	if (mysql_stmt_prepare(stmt, query.c_str(), query.size()))
+	{
+		show_stmt_error(stmt);
+	}
+	memset(bind, 0, sizeof(MYSQL_BIND) * 3);
+
+	/* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
+	bind[0].u.indicator = id_ind;
+	bind[0].buffer_type = MYSQL_TYPE_LONG;
+	std::cout << &name[0] << std::endl;
+	bind[1].buffer = &name[0];
+	bind[1].buffer_type = MYSQL_TYPE_STRING;
+	bind[1].buffer_length = name.size();
+	bind[1].length = &nameLen;
+
+	bind[2].buffer_type = MYSQL_TYPE_LONG;
+	bind[2].buffer = score;
+
+	/* bind parameter */
+	mysql_stmt_bind_param(stmt, bind);
+
+	/* execute */
+	if (mysql_stmt_execute(stmt))
+		show_stmt_error(stmt);
+
+	mysql_stmt_close(stmt);
+	
+}

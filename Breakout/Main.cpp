@@ -118,6 +118,8 @@ int main(int argc, char* args[]) {
 					quit = true;
 					break;
 				case Action::Submit:
+					int score = breakout.getScore();
+					highscore.submitScore(&score, submit.getName());
 					highscore.collectHighscores(window.getRenderer());
 					screen = Screen::HighScore;
 					break;

@@ -60,16 +60,13 @@ void SubmitScreen::render(SDL_Renderer* renderer)
 	if (renderInput)
 	{
 		SDL_Color color = { 0, 0xFF, 0 };
-		//Text is not empty
 		if (input != "")
 		{
-			//Render new text
 			inputText.loadFromRenderedText(input.c_str(), color, renderer);
 		}
-		//Text is empty
+
 		else
 		{
-			//Render space texture
 			inputText.loadFromRenderedText(" ", color, renderer);
 		}
 	}
@@ -84,4 +81,9 @@ void SubmitScreen::render(SDL_Renderer* renderer)
 	newGame.render(renderer);
 	quit.render(renderer);
 	renderInput = false;
+}
+
+std::string SubmitScreen::getName()
+{
+	return input;
 }
