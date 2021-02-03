@@ -20,7 +20,7 @@ Action SubmitScreen::handleEvent(SDL_Event* e)
 	{
 		return Action::Quit;
 	}
-	else if (submit.handleEvent(e))
+	else if (submit.handleEvent(e) && !input.empty())
 	{
 		return Action::Submit;
 	}

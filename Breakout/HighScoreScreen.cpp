@@ -138,7 +138,6 @@ void HighScoreScreen::submitScore(int* score, std::string name)
 	/* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 	bind[0].u.indicator = id_ind;
 	bind[0].buffer_type = MYSQL_TYPE_LONG;
-	std::cout << &name[0] << std::endl;
 	bind[1].buffer = &name[0];
 	bind[1].buffer_type = MYSQL_TYPE_STRING;
 	bind[1].buffer_length = name.size();
