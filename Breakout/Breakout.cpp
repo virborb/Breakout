@@ -20,7 +20,7 @@ std::vector <Brick> Breakout::createBricks()
 	{
 		for (int y = 0; y < ROWS; y++)
 		{
-			SDL_Color color = { rand() % 255, rand() % 255, rand() % 255, 0xFF };
+			SDL_Color color = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255), 0xFF };
 			bricks.push_back(Brick(width * x, height * y + 20, color));
 		}
 	}
