@@ -50,6 +50,11 @@ void HighScoreScreen::connectDB()
 	}
 }
 
+void HighScoreScreen::closeDB()
+{
+	mysql_close(conn);
+}
+
 void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 {
 	int qstate = -1;

@@ -22,6 +22,7 @@ public:
 	void collectHighscores(SDL_Renderer* renderer);
 	bool checkNewHighscore(int score, SDL_Renderer* renderer);
 	void submitScore(int* score, std::string name);
+	void closeDB();
 private:
 	static void show_stmt_error(MYSQL_STMT* stmt);
 	struct Highscore

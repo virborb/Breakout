@@ -63,6 +63,18 @@ bool Window::init() {
 	return success;
 }
 
+void Window::close()
+{
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	window = NULL;
+	renderer = NULL;
+
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
 void Window::clearScreen() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
 	SDL_RenderClear(renderer);

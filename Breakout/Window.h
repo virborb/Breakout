@@ -14,6 +14,7 @@ public:
 
 	Window();
 	bool init();
+	void close();
 	void clearScreen();
 	void updateScreen();
 	SDL_Window* getWindow();

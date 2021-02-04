@@ -6,7 +6,8 @@ int main(int argc, char* args[]) {
 	if (!window.init()) {
 		printf("Failed to initialize!\n");
 	}
-	else {
+	else 
+	{
 		bool quit = false;
 		bool newScore = false;
 		Screen screen = Screen::Start;
@@ -134,6 +135,9 @@ int main(int argc, char* args[]) {
 			}
 			window.updateScreen();
 		}
+		highscore.closeDB();
+		SDL_StopTextInput();
+		window.close();
 	}
 	return 0;
 }
