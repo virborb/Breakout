@@ -28,9 +28,3 @@ void EndScreen::render(SDL_Renderer* renderer)
 	newGame.render(renderer);
 	quit.render(renderer);
 }
-
-Button* EndScreen::getButtons() 
-{
-	Button buttons[] = { newGame, quit };
-	return buttons;
-}

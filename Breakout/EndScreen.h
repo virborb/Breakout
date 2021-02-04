@@ -11,7 +11,6 @@ public:
 	EndScreen(SDL_Renderer* renderer);
 	void render(SDL_Renderer* renderer);
 	Action handleEvent(SDL_Event* e);
-	Button* getButtons();
 private:
 	Text text;
 	Button newGame;
