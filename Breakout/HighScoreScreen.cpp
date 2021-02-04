@@ -130,11 +130,11 @@ void HighScoreScreen::submitScore(int* score, std::string name)
 	/* Data for insert */
 	std::string query = "INSERT INTO Highscore VALUES (?,?,?)";
 	char id_ind[] = { STMT_INDICATOR_NULL };
-	unsigned long nameLen = name.size();
+	unsigned long nameLen = static_cast<unsigned long>(name.size());
 	unsigned int array_size = 1;
 
 	stmt = mysql_stmt_init(conn);
-	if (mysql_stmt_prepare(stmt, query.c_str(), query.size()))
+	if (mysql_stmt_prepare(stmt, query.c_str(), static_cast<unsigned long>(query.size())))
 	{
 		show_stmt_error(stmt);
 	}
@@ -145,7 +145,7 @@ void HighScoreScreen::submitScore(int* score, std::string name)
 	bind[0].buffer_type = MYSQL_TYPE_LONG;
 	bind[1].buffer = &name[0];
 	bind[1].buffer_type = MYSQL_TYPE_STRING;
-	bind[1].buffer_length = name.size();
+	bind[1].buffer_length = nameLen;
 	bind[1].length = &nameLen;
 
 	bind[2].buffer_type = MYSQL_TYPE_LONG;
