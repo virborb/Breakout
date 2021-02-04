@@ -9,11 +9,13 @@ class EndScreen
 {
 public:
 	EndScreen(SDL_Renderer* renderer);
-	void render(SDL_Renderer* renderer);
+	void render(int score, SDL_Renderer* renderer);
 	Action handleEvent(SDL_Event* e);
 private:
+	Text title;
 	Text text;
 	Button newGame;
 	Button quit;
+	Button highscore;
 };
 

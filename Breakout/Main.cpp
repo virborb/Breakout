@@ -79,13 +79,12 @@ int main(int argc, char* args[]) {
 					}
 					else
 					{
-						screen = Screen::HighScore;
-						highscore.collectHighscores(window.getRenderer());
+						screen = Screen::End;
 					}
 				}
 				break;
 			case Screen::End:
-				endScreen.render(window.getRenderer());
+				endScreen.render(breakout.getScore(), window.getRenderer());
 				switch (action)
 				{
 				case Action::NewGame:
@@ -95,6 +94,9 @@ int main(int argc, char* args[]) {
 				case Action::Quit:
 					quit = true;
 					break;
+				case Action::Highscore:
+					screen = Screen::HighScore;
+					highscore.collectHighscores(window.getRenderer());
 				}
 				break;
 			case Screen::HighScore:
