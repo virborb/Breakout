@@ -18,9 +18,9 @@ Ball::Ball(int centreX, int centreY, double radius)
 
 void Ball::DrawBall(SDL_Renderer* renderer)
 {
-	const int diameter = (radius * 2);
+	const int diameter = static_cast<int>(radius * 2);
 
-	int x = (radius - 1);
+	int x = static_cast<int>(radius - 1);
 	int y = 0;
 	int tx = 1;
 	int ty = 1;
@@ -63,15 +63,15 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 
 bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 {
-	centreX += velX;
+	centreX += static_cast<int>(velX);
 
 	if ((centreX - radius < 0) || (centreX + radius > Window::SCREEN_WIDTH) || checkCollision(bricks) || checkCollision(paddle))
 	{
-		centreX -= velX;
+		centreX -= static_cast<int>(velX);
 		velX = -velX;
 	}
 
-	centreY += velY;
+	centreY += static_cast<int>(velY);
 
 	if ((centreY + radius > Window::SCREEN_HEIGHT)) 
 	{
@@ -80,7 +80,7 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 
 	if ((centreY - radius < 0) || checkCollision(bricks) || checkCollision(paddle))
 	{
-		centreY -= velY;
+		centreY -= static_cast<int>(velY);
 		velY = -velY;
 	}
 	return true;
