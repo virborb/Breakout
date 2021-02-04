@@ -17,8 +17,8 @@ public:
 private:
 	static const int WIDTH =  100;
 	static const int HEIGHT = 5;
-	int velocity;
-	int speed = 5;
+	double velocity;
+	double speed = 5;
 	SDL_Rect rect;
 	SDL_Color color;
 };

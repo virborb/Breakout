@@ -34,11 +34,11 @@ void Paddle::handleEvent(SDL_Event& e)
 
 void Paddle::move()
 {
-    rect.x += velocity;
+    rect.x += (int) velocity;
 
     if ((rect.x < 0) || (rect.x + rect.w > Window::SCREEN_WIDTH))
     {
-        rect.x -= velocity;
+        rect.x -= (int) velocity;
     }
 }
 
@@ -64,5 +64,5 @@ void Paddle::increaseVelocity()
 
 void Paddle::decreaseWidth()
 {
-    rect.w = rect.w * 0.90;
+    rect.w = (int) (rect.w * 0.90);
 }
