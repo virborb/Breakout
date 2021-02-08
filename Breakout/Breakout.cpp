@@ -1,5 +1,8 @@
 #include "Breakout.h"
 
+/**
+ * @brief Creates the game screen with bricks, ball and paddle
+*/
 Breakout::Breakout() 
 {
 	bricks = createBricks();
@@ -11,6 +14,11 @@ Breakout::Breakout()
 	level = 1;
 }
 
+
+/**
+ * @brief Creates all bricks for a game level with random colors.
+ * @return The bricks
+*/
 std::vector <Brick> Breakout::createBricks()
 {
 	int width = Window::SCREEN_WIDTH / 10;
@@ -27,6 +35,10 @@ std::vector <Brick> Breakout::createBricks()
 	return bricks;
 }
 
+/**
+ * @brief Checks if next level should start.
+ * @param window the Window to render on.
+*/
 void Breakout::checkNextLevel(Window window)
 {
 	if (bricks.empty())
@@ -47,11 +59,18 @@ void Breakout::checkNextLevel(Window window)
 	}
 }
 
+/**
+ * @brief Gets the paddle
+ * @return The paddle
+*/
 Paddle* Breakout::getPaddle()
 {
 	return &paddle;
 }
-
+/**
+ * @brief Loads the top info on lives and score.
+ * @param window The window to render on.
+*/
 void Breakout::loadInfoBar(Window window) {
 	scoreText.loadFromRenderedText("Score: " + std::to_string(score), textColor, window.getRenderer());
 	livesText.loadFromRenderedText("Lives: " + std::to_string(lives), textColor, window.getRenderer());
@@ -60,6 +79,10 @@ void Breakout::loadInfoBar(Window window) {
 	livesText.render(100, 0, window.getRenderer());
 }
 
+/**
+ * @brief Render the bricks on the screen.
+ * @param window The window to render on.
+*/
 void Breakout::renderBricks(Window window) {
 	for (int i = 0; i < bricks.size(); i++)
 	{
@@ -77,6 +100,10 @@ void Breakout::renderBricks(Window window) {
 	}
 }
 
+/**
+ * @brief Moves and renders the paddle on the screen.
+ * @param window The window to render on.
+*/
 void Breakout::moveAndRenderPaddle(Window window) 
 {
 	SDL_Color color = paddle.getColor();
@@ -85,6 +112,11 @@ void Breakout::moveAndRenderPaddle(Window window)
 	SDL_RenderFillRect(window.getRenderer(), paddle.getRect());
 }
 
+/**
+ * @brief Moves and render the ball. Returns false if ball hits bottom otherwise true.
+ * @param window The window to render on.
+ * @return true if ball didn't hit the bottom otherwise false.
+*/
 bool Breakout::moveAndRenderBall(Window window)
 {
 	if (!ball.move(&bricks, &paddle))
@@ -95,6 +127,11 @@ bool Breakout::moveAndRenderBall(Window window)
 	return true;
 }
 
+
+/**
+ * @brief Checks if game is over.
+ * @return true if game over otherwise false.
+*/
 bool Breakout::CheckIsDead()
 {
 	if (lives == 0)
@@ -109,6 +146,9 @@ bool Breakout::CheckIsDead()
 	return false;
 }
 
+/**
+ * @brief Start a new game.
+*/
 void Breakout::startNewGame()
 {
 	bricks = createBricks();
@@ -119,6 +159,10 @@ void Breakout::startNewGame()
 	paddle = Paddle();
 }
 
+/**
+ * @brief Returns the current score.
+ * @return The score.
+*/
 int Breakout::getScore()
 {
 	return score;
