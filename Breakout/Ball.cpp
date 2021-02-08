@@ -1,10 +1,19 @@
 #include "Ball.h"
 
+/**
+ * @brief Default constructor that creates a ball at position (0,0) and radius 0.
+*/
 Ball::Ball()
 {
 	Ball(0, 0, 0);
 }
 
+/**
+ * @brief Creates a ball with the given parameter 
+ * @param centreX The x cordinate on the screen
+ * @param centreY The y cordinate on the screen
+ * @param radius The radius of the ball.
+*/
 Ball::Ball(int centreX, int centreY, double radius)
 {
 	this->centreX = centreX;
@@ -16,6 +25,10 @@ Ball::Ball(int centreX, int centreY, double radius)
 	speed = 1;
 }
 
+/**
+ * @brief Draws the ball on the screen
+ * @param renderer The render to use.
+*/
 void Ball::DrawBall(SDL_Renderer* renderer)
 {
 	const int diameter = static_cast<int>(radius * 2);
@@ -61,6 +74,12 @@ void Ball::DrawBall(SDL_Renderer* renderer)
 	}
 }
 
+/**
+ * @brief Moves the ball. Returns false if the ball hits the bottom. Checks for collisions on the bricks and the paddle. 
+ * @param bricks The bricks to check for collisions on.
+ * @param paddle The paddle to check for collisions on.
+ * @return false if the ball hits the bottom otherwise true.
+*/
 bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 {
 	centreX += static_cast<int>(velX);
@@ -86,6 +105,11 @@ bool Ball::move(std::vector <Brick>* bricks, Paddle* paddle)
 	return true;
 }
 
+/**
+ * @brief Checks for collisions on bricks. Set a brick to dead if it was hit.
+ * @param bricks the bricks to check on.
+ * @return true if a brick was hit otherwise false.
+*/
 bool Ball::checkCollision(std::vector <Brick>* bricks)
 {
 	for (int i = 0; i < bricks->size(); i++)
@@ -131,6 +155,11 @@ bool Ball::checkCollision(std::vector <Brick>* bricks)
 	return false;
 }
 
+/**
+ * @brief Checks for collision against the paddle
+ * @param paddle The paddle to check collision against.
+ * @return true if paddle was hit otherwise false.
+*/
 bool Ball::checkCollision(Paddle* paddle)
 {
 	//Closest point on collision box
@@ -179,6 +208,14 @@ bool Ball::checkCollision(Paddle* paddle)
 	return false;
 }
 
+/**
+ * @brief Returns the  distance between to positions squared.
+ * @param x1 The first x cordinate.
+ * @param y1 The first y cordinate.
+ * @param x2 The second x cordinate.
+ * @param y2 The second y cordinate.
+ * @return The distance squared.
+*/
 double Ball::distanceSquared(double x1, double y1, double x2, double y2)
 {
 	double deltaX = x2 - x1;
@@ -186,11 +223,19 @@ double Ball::distanceSquared(double x1, double y1, double x2, double y2)
 	return deltaX * deltaX + deltaY * deltaY;
 }
 
+/**
+ * @brief Gets the speed of the ball
+ * @return The speed
+*/
 double Ball::getSpeed()
 {
 	return speed;
 }
 
+/**
+ * @brief Sets the speed of the ball
+ * @param speed The speed to set.
+*/
 void Ball::setSpeed(double speed)
 {
 	this->speed = speed;
