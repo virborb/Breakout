@@ -12,12 +12,12 @@ public:
 	Ball(int centreX, int centreY, double radius);
 	void DrawBall(SDL_Renderer* renderer);
 	bool move(std::vector <Brick>* bricks, Paddle* paddle);
-	bool checkCollision(std::vector <Brick>* bricks);
-	bool checkCollision(Paddle* paddle);
-	double distanceSquared(double x1, double y1, double x2, double y2);
 	double getSpeed();
 	void setSpeed(double speed);
 private:
+	bool checkCollision(std::vector <Brick>* bricks);
+	bool checkCollision(Paddle* paddle);
+	double distanceSquared(double x1, double y1, double x2, double y2);
 	static const int VEL = 5;
 	SDL_Color color;
 	int centreX;
