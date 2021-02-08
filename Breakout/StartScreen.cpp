@@ -39,8 +39,7 @@ Action StartScreen::handleEvent(SDL_Event* e)
 }
 
 /**
- * @brief Render the end screen.
- * @param score The score to render.
+ * @brief Render the start screen.
  * @param renderer The renderer to use.
 */
 void StartScreen::render(SDL_Renderer* renderer)
