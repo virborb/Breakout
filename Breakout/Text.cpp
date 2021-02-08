@@ -70,22 +70,11 @@ bool Text::loadFromRenderedText(std::string textureText, SDL_Color textColor, SD
  * @param x The x cordinate
  * @param y The y cordinate
  * @param renderer The renderer to use.
- * @param clip 
- * @param angle 
- * @param center 
- * @param flip 
 */
-void Text::render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void Text::render(int x, int y, SDL_Renderer* renderer)
 {
 	SDL_Rect renderQuad = { x, y, width, height };
-
-	if (clip != NULL)
-	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
-
-	SDL_RenderCopyEx(renderer, texture, clip, &renderQuad, angle, center, flip);
+	SDL_RenderCopyEx(renderer, texture, NULL, &renderQuad, 0.0, NULL, SDL_FLIP_NONE);
 }
 
 /**
