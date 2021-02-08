@@ -1,5 +1,9 @@
 #include "StartScreen.h"
 
+/**
+ * @brief Constructs a Start screen which show the main menu at startup.
+ * @param renderer The renderer to use.
+*/
 StartScreen::StartScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
@@ -13,6 +17,11 @@ StartScreen::StartScreen(SDL_Renderer* renderer)
 	quit.setPosition(Window::SCREEN_WIDTH / 2 - quit.getWidth() / 2, Window::SCREEN_HEIGHT / 2 + 70);
 }
 
+/**
+ * @brief Handles the button presses on the screen and return what button was pressed.
+ * @param e The SDL event pointer
+ * @return An Action to do next.
+*/
 Action StartScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
@@ -29,6 +38,11 @@ Action StartScreen::handleEvent(SDL_Event* e)
 	return Action::NoAction;
 }
 
+/**
+ * @brief Render the end screen.
+ * @param score The score to render.
+ * @param renderer The renderer to use.
+*/
 void StartScreen::render(SDL_Renderer* renderer)
 {
 	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT / 2 - 50, renderer);
