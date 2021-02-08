@@ -1,5 +1,9 @@
 #include "HighScoreScreen.h"
 
+/**
+ * @brief Creates the highscore screen.
+ * @param renderer The renderer to use.
+*/
 HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
@@ -9,6 +13,11 @@ HighScoreScreen::HighScoreScreen(SDL_Renderer* renderer)
 	conn = NULL;
 }
 
+/**
+ * @brief Handles the button presses on the screen and return what button was pressed.
+ * @param e The SDL event pointer
+ * @return An Action to do next.
+*/
 Action HighScoreScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
@@ -21,6 +30,10 @@ Action HighScoreScreen::handleEvent(SDL_Event* e)
 	return Action::NoAction;
 }
 
+/**
+ * @brief Render the highscore screen
+ * @param renderer The renderer to use.
+*/
 void HighScoreScreen::render(SDL_Renderer* renderer)
 {
 	title.render(Window::SCREEN_WIDTH / 2 - title.getWidth() / 2, Window::SCREEN_HEIGHT/2 - 90, renderer);
@@ -38,6 +51,9 @@ void HighScoreScreen::render(SDL_Renderer* renderer)
 	quit.render(renderer);
 }
 
+/**
+ * @brief Connects to the database.
+*/
 void HighScoreScreen::connectDB()
 {
 	conn = mysql_init(0);
@@ -50,11 +66,18 @@ void HighScoreScreen::connectDB()
 	}
 }
 
+/**
+ * @brief Closes the connection to the database.
+*/
 void HighScoreScreen::closeDB()
 {
 	mysql_close(conn);
 }
 
+/**
+ * @brief Collects the highscores from the database.
+ * @param renderer The renderer to use.
+*/
 void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 {
 	int qstate = -1;
@@ -88,6 +111,13 @@ void HighScoreScreen::collectHighscores(SDL_Renderer* renderer)
 	}
 }
 
+
+/**
+ * @brief Check if score is a new highscore.
+ * @param score The score to check.
+ * @param renderer The renderer to use.
+ * @return true if new highscore otherwise false.
+*/
 bool HighScoreScreen::checkNewHighscore(int score, SDL_Renderer* renderer)
 {
 	int qstate = -1;
@@ -115,6 +145,10 @@ bool HighScoreScreen::checkNewHighscore(int score, SDL_Renderer* renderer)
 	return false;
 }
 
+/**
+ * @brief Shows statment error.
+ * @param stmt The statment.
+*/
 void HighScoreScreen::show_stmt_error(MYSQL_STMT* stmt)
 {
 	printf("Error(%d) [%s] \"%s\"", mysql_stmt_errno(stmt),
@@ -123,6 +157,11 @@ void HighScoreScreen::show_stmt_error(MYSQL_STMT* stmt)
 	exit(-1);
 }
 
+/**
+ * @brief Submits score to database.
+ * @param score The score.
+ * @param name The name of the player.
+*/
 void HighScoreScreen::submitScore(int* score, std::string name)
 {
 	MYSQL_STMT* stmt;
