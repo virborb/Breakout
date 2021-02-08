@@ -1,5 +1,9 @@
 #include "SubmitScreen.h"
 
+/**
+ * @brief Makes a screen to submit a new highscore.
+ * @param renderer The renderer to use.
+*/
 SubmitScreen::SubmitScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
@@ -12,6 +16,12 @@ SubmitScreen::SubmitScreen(SDL_Renderer* renderer)
 	renderInput = true;
 }
 
+/**
+ * @brief Handles the button presses on the screen and return what button was pressed
+ *        And text input for the name field.
+ * @param e The SDL event pointer
+ * @return An Action to do next.
+*/
 Action SubmitScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
@@ -56,6 +66,10 @@ Action SubmitScreen::handleEvent(SDL_Event* e)
 	return Action::NoAction;
 }
 
+/**
+ * @brief Render the submit screen.
+ * @param renderer The renderer to use.
+*/
 void SubmitScreen::render(int score, SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
@@ -86,6 +100,10 @@ void SubmitScreen::render(int score, SDL_Renderer* renderer)
 	renderInput = false;
 }
 
+/**
+ * @brief Gets inputed name from the player.
+ * @return The name
+*/
 std::string SubmitScreen::getName()
 {
 	return input;
