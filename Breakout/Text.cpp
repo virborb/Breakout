@@ -1,5 +1,9 @@
 #include "Text.h"
 
+/**
+ * @brief Creates a text area with given font size. 
+ * @param fontSize The font size(default 15).
+*/
 Text::Text(int fontSize)
 {
 	texture = NULL;
@@ -12,11 +16,21 @@ Text::Text(int fontSize)
 	}
 }
 
+/**
+ * @brief Deconstructs text.
+*/
 Text::~Text()
 {
 	free();
 }
 
+/**
+ * @brief Loads a string of text with given color
+ * @param textureText The text to load.
+ * @param textColor The color of the text.
+ * @param renderer The renderer to use.
+ * @return true if it was successfully create otherwise false.
+*/
 bool Text::loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer)
 {
 	//Get rid of preexisting texture
@@ -51,41 +65,52 @@ bool Text::loadFromRenderedText(std::string textureText, SDL_Color textColor, SD
 	return texture != NULL;
 }
 
+/**
+ * @brief Render a string of text to the screen.
+ * @param x The x cordinate
+ * @param y The y cordinate
+ * @param renderer The renderer to use.
+ * @param clip 
+ * @param angle 
+ * @param center 
+ * @param flip 
+*/
 void Text::render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
-	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, width, height };
 
-	//Set clip rendering dimensions
 	if (clip != NULL)
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
 
-	//Render to screen
 	SDL_RenderCopyEx(renderer, texture, clip, &renderQuad, angle, center, flip);
 }
 
-void Text::setFontSize(int fontSize)
-{
-	TTF_CloseFont(font);
-	font = TTF_OpenFont(FONT_PATH, fontSize);
-}
-
+/**
+ * @brief Gets Text width.
+ * @return The width
+*/
 int Text::getWidth()
 {
 	return width;
 }
 
+/**
+ * @brief Gets Text height.
+ * @return The height.
+*/
 int Text::getHeight()
 {
 	return height;
 }
 
+/**
+ * @brief Frees texture if it exists.
+*/
 void Text::free()
 {
-	//Free texture if it exists
 	if (texture != NULL)
 	{
 		SDL_DestroyTexture(texture);
