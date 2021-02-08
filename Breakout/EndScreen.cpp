@@ -1,5 +1,9 @@
 #include "EndScreen.h"
 
+/**
+ * @brief Creates a end screen uses when losing with no new highscore
+ * @param renderer The renderer to use.
+*/
 EndScreen::EndScreen(SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
@@ -13,6 +17,11 @@ EndScreen::EndScreen(SDL_Renderer* renderer)
 	quit.setPosition(Window::SCREEN_WIDTH / 2  + highscore.getWidth() / 2 + 5, Window::SCREEN_HEIGHT / 2 + 20);
 }
 
+/**
+ * @brief Handles the button presses on the screen and return what button was pressed.
+ * @param e The SDL event pointer
+ * @return An Action to do next.
+*/
 Action EndScreen::handleEvent(SDL_Event* e)
 {
 	if (newGame.handleEvent(e)) {
@@ -29,6 +38,11 @@ Action EndScreen::handleEvent(SDL_Event* e)
 	return Action::NoAction;
 }
 
+/**
+ * @brief Render the end screen.
+ * @param score The score to render.
+ * @param renderer The renderer to use.
+*/
 void EndScreen::render(int score, SDL_Renderer* renderer)
 {
 	SDL_Color color = { 0, 0xFF, 0 };
