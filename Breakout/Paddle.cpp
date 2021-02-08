@@ -15,21 +15,17 @@ Paddle::Paddle() {
 */
 void Paddle::handleEvent(SDL_Event& e)
 {
-    //If a key was pressed
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
     {
-        //Adjust the velocity
         switch (e.key.keysym.sym)
         {
         case SDLK_a: velocity -= speed; break;
         case SDLK_d: velocity += speed; break;
         }
     }
-    //If a key was released
     else if (e.type == SDL_KEYUP && e.key.repeat == 0)
     {
         if (velocity != 0) {
-            //Adjust the velocity
             switch (e.key.keysym.sym)
             {
             case SDLK_a: velocity += speed; break;
