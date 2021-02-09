@@ -9,7 +9,7 @@ public:
 	SDL_Rect* getRect();
 	SDL_Color getColor();
 	//Takes key presses and adjusts the paddle's velocity
-	void handleEvent(SDL_Event& e);
+	void handleEvent(SDL_Event* e);
 	void move();
 	void centerPaddle();
 	void increaseVelocity();

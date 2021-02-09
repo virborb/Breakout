@@ -13,20 +13,20 @@ Paddle::Paddle() {
  * @brief Handles key presses on A and D.
  * @param e The SDL event pointer.
 */
-void Paddle::handleEvent(SDL_Event& e)
+void Paddle::handleEvent(SDL_Event* e)
 {
-    if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
+    if (e->type == SDL_KEYDOWN && e->key.repeat == 0)
     {
-        switch (e.key.keysym.sym)
+        switch (e->key.keysym.sym)
         {
         case SDLK_a: velocity -= speed; break;
         case SDLK_d: velocity += speed; break;
         }
     }
-    else if (e.type == SDL_KEYUP && e.key.repeat == 0)
+    else if (e->type == SDL_KEYUP && e->key.repeat == 0)
     {
         if (velocity != 0) {
-            switch (e.key.keysym.sym)
+            switch (e->key.keysym.sym)
             {
             case SDLK_a: velocity += speed; break;
             case SDLK_d: velocity -= speed; break;
