@@ -2,14 +2,12 @@
 
 int main(int argc, char* args[]) {
 	Window window;
-	int buttonid = 0;
 	if (!window.init()) {
 		printf("Failed to initialize!\n");
 	}
 	else 
 	{
 		bool quit = false;
-		bool newScore = false;
 		Screen screen = Screen::Start;
 		SDL_Event e;
 		SDL_StartTextInput();
