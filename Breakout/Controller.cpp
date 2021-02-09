@@ -1,5 +1,10 @@
 #include "Controller.h"
 
+/**
+ * @brief Creates a controller which selects what screen to
+          render and handles input from user.
+ * @param renderer The renderer to use.
+*/
 Controller::Controller(SDL_Renderer* renderer) :
 	startScreen{ renderer },
 	endScreen{ renderer },
@@ -12,12 +17,19 @@ Controller::Controller(SDL_Renderer* renderer) :
 	SDL_StartTextInput();
 }
 
+/**
+ * @brief Closes Database and stop text input.
+*/
 void Controller::close()
 {
 	highscore.closeDB();
 	SDL_StopTextInput();
 }
 
+/**
+ * @brief Handles events from the user.
+ * @param e The SDL event pointer.
+*/
 void Controller::eventHandler(SDL_Event* e)
 {
 	action = Action::NoAction;
@@ -45,6 +57,12 @@ void Controller::eventHandler(SDL_Event* e)
 	}
 }
 
+/**
+ * @brief Checks which screen to render and returns true if game should close otherwise false.
+ * @param renderer The renderer to use.
+ * @param window The window to render on.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderScreen(SDL_Renderer* renderer, Window window)
 {
 	switch (screen)
@@ -63,6 +81,11 @@ bool Controller::renderScreen(SDL_Renderer* renderer, Window window)
 	return false;
 }
 
+/**
+ * @brief Render start screen and check for actions from user.
+ * @param renderer The renderer to use.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderStart(SDL_Renderer* renderer) {
 	startScreen.render(renderer);
 	switch (action)
@@ -81,7 +104,12 @@ bool Controller::renderStart(SDL_Renderer* renderer) {
 	return false;
 }
 
-
+/**
+ * @brief Render game screen and check for actions from user.
+ * @param renderer The renderer to use.
+ * @param window The window to render on.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderGame(SDL_Renderer* renderer, Window window)
 {
 	breakout.checkNextLevel(window);
@@ -103,6 +131,11 @@ bool Controller::renderGame(SDL_Renderer* renderer, Window window)
 	return (action == Action::Quit);
 }
 
+/**
+ * @brief Render end screen and check for actions from user.
+ * @param renderer The renderer to use.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderEnd(SDL_Renderer* renderer)
 {
 	endScreen.render(breakout.getScore(), renderer);
@@ -121,6 +154,12 @@ bool Controller::renderEnd(SDL_Renderer* renderer)
 	}
 	return false;
 }
+
+/**
+ * @brief Render highscore screen and check for actions from user.
+ * @param renderer The renderer to use.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderHighscore(SDL_Renderer* renderer)
 {
 	highscore.render(renderer);
@@ -136,6 +175,12 @@ bool Controller::renderHighscore(SDL_Renderer* renderer)
 	}
 	return false;
 }
+
+/**
+ * @brief Render submit screen and check for actions from user.
+ * @param renderer The renderer to use.
+ * @return true if game should close otherwise false.
+*/
 bool Controller::renderSubmit(SDL_Renderer* renderer)
 {
 	int score = breakout.getScore();
